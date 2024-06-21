@@ -3,7 +3,7 @@ const template = document.querySelector("#template");
 const fragment = document.createDocumentFragment();
 const agregar = document.querySelectorAll(".card button");
 
-const carritoObjeto = {}; // Creo un objeto vacio
+const carritoObjeto = []; // Creo un array  vacio
 
 const agregarCarrito = (e) => { 
     // console.log(e.target.dataset);  //Obtener la informacion con e del data-name acordado
@@ -15,25 +15,32 @@ const agregarCarrito = (e) => {
         cantidad: 1,
     };
 
-    if (carritoObjeto.hasOwnProperty(producto.id)) {
-        producto.cantidad = carritoObjeto[producto.id].cantidad + 1;
-    } 
+    const index = carritoObjeto.findIndex((p) => p.id === producto.id);
 
-    carritoObjeto[producto.id] = producto;
+    //console.log(index);
+     
+    if(index === -1){
+        carritoObjeto.push(producto);
+    }else{
+        carritoObjeto[index].cantidad++;
+    }
 
-    pintarCarrito();
+   // console.log(carritoObjeto);
+
+   pintarCarrito(carritoObjeto);
+};
+
+const pintarCarrito = (array) => {
+    carrito.textContent = "";
+
+   array.forEach((p) => {
+        const clone = template.content.firstElementChild.cloneNode(true);
+        clone.querySelector(".lead").textContent = p.titulo;
+        clone.querySelector(".rounded-pill").textContent = p.cantidad;
+        fragment.appendChild(clone);
+    });
+    carrito.appendChild(fragment);  
 };
 
 agregar.forEach((boton) => boton.addEventListener("click", agregarCarrito));
 
-const pintarCarrito = () => {
-    carrito.textContent = "";
-
-    Object.values(carritoObjeto).forEach((item) => {
-        const clone = template.content.firstElementChild.cloneNode(true);
-        clone.querySelector(".lead").textContent = item.titulo;
-        clone.querySelector(".rounded-pill").textContent = item.cantidad;
-        fragment.appendChild(clone);
-    });
-    carrito.appendChild(fragment); 
-};
