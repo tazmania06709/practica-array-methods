@@ -5,6 +5,18 @@ const agregar = document.querySelectorAll(".card button");
 
 const carritoObjeto = []; // Creo un array  vacio
 
+const pintarCarrito = (array) => {
+    carrito.textContent = "";
+
+   array.forEach((p) => {
+        const clone = template.content.firstElementChild.cloneNode(true);
+        clone.querySelector(".lead").textContent = p.titulo;
+        clone.querySelector(".rounded-pill").textContent = p.cantidad;
+        fragment.appendChild(clone);
+    });
+    carrito.appendChild(fragment);  
+};
+
 const agregarCarrito = (e) => { 
     // console.log(e.target.dataset);  //Obtener la informacion con e del data-name acordado
     // console.log(e.target.dataset.fruta);
@@ -30,17 +42,6 @@ const agregarCarrito = (e) => {
    pintarCarrito(carritoObjeto);
 };
 
-const pintarCarrito = (array) => {
-    carrito.textContent = "";
-
-   array.forEach((p) => {
-        const clone = template.content.firstElementChild.cloneNode(true);
-        clone.querySelector(".lead").textContent = p.titulo;
-        clone.querySelector(".rounded-pill").textContent = p.cantidad;
-        fragment.appendChild(clone);
-    });
-    carrito.appendChild(fragment);  
-};
 
 agregar.forEach((boton) => boton.addEventListener("click", agregarCarrito));
 
