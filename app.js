@@ -14,7 +14,7 @@ const pintarCarrito = (array) => {
         clone.querySelector(".rounded-pill").textContent = p.cantidad;
         fragment.appendChild(clone);
     });
-    carrito.appendChild(fragment);  
+    carrito.appendChild(fragment);  //evitar el reflow
 };
 
 const agregarCarrito = (e) => { 
